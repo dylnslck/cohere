@@ -46,7 +46,10 @@ class Schema {
   }
 }
 
-export default (...args) => new Schema(...args);
+const createSchema = (...args) => new Schema(...args);
+
+export default createSchema;
+export { createSchema as schema };
 
 export const hasMany = (type, inverse = '', options = {}) => (field) => ({
   ...relationshipObject(type, field, inverse, options),
