@@ -1,14 +1,12 @@
 {
   "name": "redink-schema",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Simple class for building Redink schemas.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npm run clean && mkdirp dist && babel src --out-dir dist --source-maps inline",
-    "build:prod": "BABEL_ENV=production npm run clean && mkdirp dist && babel src --out-dir dist",
-    "docs": "babel-node documentation",
+    "build": "npm run clean && mkdirp dist && babel src --out-dir dist",
     "clean": "rimraf dist coverage .nyc_output",
-    "prepublish": "npm run build:prod"
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
