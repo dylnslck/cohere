@@ -97,6 +97,13 @@ export default class Type {
           field,
         }));
       },
+
+      reduce(fn, initialValue) {
+        return Object.keys(attributes).reduce((init, field) => fn(init, {
+          type: attributes[field],
+          field,
+        }), initialValue);
+      },
     };
   }
 
@@ -112,6 +119,11 @@ export default class Type {
 
       forEach(fn) {
         Object.keys(relationships).forEach(field => fn(relationships[field]));
+      },
+
+      reduce(fn, initialValue) {
+        return Object.keys(relationships).reduce((init, field) =>
+          fn(init, relationships[field]), initialValue);
       },
     };
   }
