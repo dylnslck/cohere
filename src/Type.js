@@ -85,11 +85,17 @@ export default class Type {
       ...attributes,
 
       map(fn) {
-        return Object.keys(attributes).map(field => fn(attributes[field]));
+        return Object.keys(attributes).map(field => fn({
+          type: attributes[field],
+          field,
+        }));
       },
 
       forEach(fn) {
-        Object.keys(attributes).forEach(field => fn(attributes[field]));
+        Object.keys(attributes).forEach(field => fn({
+          type: attributes[field],
+          field,
+        }));
       },
     };
   }
