@@ -1,6 +1,6 @@
 {
   "name": "cohere",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple schemas",
   "main": "dist/index.js",
   "repository": "directlyio/cohere",

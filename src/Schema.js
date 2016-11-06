@@ -60,6 +60,10 @@ export default class Schema {
       forEach(fn) {
         Object.keys(types).forEach(name => fn(types[name]));
       },
+
+      reduce(fn, initialValue) {
+        return Object.keys(types).reduce((init, name) => fn(init, types[name]), initialValue);
+      },
     };
   }
 }
