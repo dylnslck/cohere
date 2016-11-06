@@ -1,26 +1,34 @@
-# redink-schema
-Simple class for building Redink schemas.
+# Cohere
+Declaratively define a schema with types and their relationships, then compile.
+
 ```js
-import schema, { hasMany, hasOne, belongsTo } from 'redink-schema';
+import Schema, { hasMany, hasOne, belongsTo } from 'cohere';
 
-const user = schema('user', {
-  attributes: {
-    name: true,
-    email: true,
-  },
-  relationships: {
-    blogs: hasMany('blog', 'author'),
-  },
-});
+export const schema = new Schema()
 
-const blog = schema('blog', {
-  attributes: {
-    title: true,
-    content: true,
-    createdOn: true,
-  },
-  relationships: {
-    author: belongsTo('user', 'blogs'),
-  },
-});
+  // create the user type
+  .defineType('user', {
+    attributes: {
+      name: true,
+      email: true,
+    },
+    relationships: {
+      blogs: hasMany('blog', 'author'),
+    },
+  })
+
+  // create the blog type
+  .defineType('blog', {
+    attributes: {
+      title: true,
+      content: true,
+      createdOn: true,
+    },
+    relationships: {
+      author: belongsTo('user', 'blogs'),
+    },
+  })
+
+  // link types together and hydrate every relationship's inverse
+  .compile();
 ```
