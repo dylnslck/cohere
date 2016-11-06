@@ -1,5 +1,5 @@
 import test from 'ava';
-import { hasMany } from '../src';
+import { hasMany, belongsTo } from '../src';
 import Type from '../src/Type';
 
 test('should compile relationships immediately', async t => {
@@ -51,4 +51,22 @@ test('should hydrate the inverse', async t => {
     field: 'author',
     isHydrated: true,
   });
+});
+
+test('should disallow overlapping fields', t => {
+  try {
+    // eslint-disable-next-line
+    new Type('invalid', {
+      attributes: {
+        name: true,
+      },
+      relationships: {
+        name: belongsTo('name', 'inverse'),
+      },
+    });
+
+    t.fail();
+  } catch (err) {
+    t.pass(err);
+  }
 });

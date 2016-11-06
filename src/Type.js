@@ -1,3 +1,12 @@
+const ensureUniqueFields = (attributes = {}, relationships = {}) => {
+  const attributesFields = Object.keys(attributes);
+  const relationshipsFields = Object.keys(relationships);
+
+  if (attributesFields.some(field => relationshipsFields.includes(field))) {
+    throw new Error('Attribute field names and relationship field names must be unique.');
+  }
+};
+
 export default class Type {
   constructor(name, fields = {}) {
     if (typeof name !== 'string') {
@@ -7,6 +16,8 @@ export default class Type {
     if (!(fields && typeof fields === 'object')) {
       throw new TypeError('Argument "fields" must be a valid object.');
     }
+
+    ensureUniqueFields(fields.attributes, fields.relationships);
 
     this.name = name;
     this.meta = fields.meta || {};
