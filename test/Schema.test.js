@@ -2,6 +2,8 @@ import test from 'ava';
 import Schema, { hasMany, belongsTo } from '../src';
 import Type from '../src/Type';
 
+const iterators = ['map', 'some', 'every', 'filter', 'find'];
+
 test('should compile schema properly', async t => {
   const schema = new Schema()
 
@@ -46,6 +48,10 @@ test('should compile schema properly', async t => {
     name: 'blog',
     relation: 'hasMany',
     isHydrated: true,
+  });
+
+  iterators.forEach(iterator => {
+    t.is(typeof schema.types[iterator], 'function');
   });
 
   t.truthy(schema.isCompiled);

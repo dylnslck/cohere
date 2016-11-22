@@ -84,13 +84,6 @@ export default class Type {
     return {
       ...attributes,
 
-      map(fn) {
-        return Object.keys(attributes).map(field => fn({
-          type: attributes[field],
-          field,
-        }));
-      },
-
       forEach(fn) {
         Object.keys(attributes).forEach(field => fn({
           type: attributes[field],
@@ -104,6 +97,14 @@ export default class Type {
           field,
         }), initialValue);
       },
+
+      ...['map', 'some', 'every', 'filter', 'find'].reduce((accumulator, iterator) => ({
+        ...accumulator,
+        [iterator]: (fn) => (
+          Object.keys(attributes)[iterator]((field, ...args) =>
+            fn(attributes[field], ...args))
+        ),
+      }), {}),
     };
   }
 
@@ -113,10 +114,6 @@ export default class Type {
     return {
       ...relationships,
 
-      map(fn) {
-        return Object.keys(relationships).map(field => fn(relationships[field]));
-      },
-
       forEach(fn) {
         Object.keys(relationships).forEach(field => fn(relationships[field]));
       },
@@ -125,6 +122,14 @@ export default class Type {
         return Object.keys(relationships).reduce((init, field) =>
           fn(init, relationships[field]), initialValue);
       },
+
+      ...['map', 'some', 'every', 'filter', 'find'].reduce((accumulator, iterator) => ({
+        ...accumulator,
+        [iterator]: (fn) => (
+          Object.keys(relationships)[iterator]((field, ...args) =>
+            fn(relationships[field], ...args))
+        ),
+      }), {}),
     };
   }
 }

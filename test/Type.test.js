@@ -2,6 +2,8 @@ import test from 'ava';
 import { hasMany, belongsTo } from '../src';
 import Type from '../src/Type';
 
+const iterators = ['map', 'some', 'every', 'filter', 'find'];
+
 test('should compile relationships immediately', async t => {
   const user = new Type('user', {
     attributes: {
@@ -24,6 +26,11 @@ test('should compile relationships immediately', async t => {
   t.truthy(user.attribute('name'));
   t.truthy(user.hasAttribute('name'));
   t.truthy(user.hasRelationship('blogs'));
+
+  iterators.forEach(iterator => {
+    t.is(typeof user.attributes[iterator], 'function');
+    t.is(typeof user.relationships[iterator], 'function');
+  });
 });
 
 test('should hydrate the inverse', async t => {

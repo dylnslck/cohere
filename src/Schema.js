@@ -64,6 +64,13 @@ export default class Schema {
       reduce(fn, initialValue) {
         return Object.keys(types).reduce((init, name) => fn(init, types[name]), initialValue);
       },
+
+      ...['map', 'some', 'every', 'filter', 'find'].reduce((accumulator, iterator) => ({
+        ...accumulator,
+        [iterator]: (fn) => (
+          Object.keys(types)[iterator]((name, ...args) => fn(types[name], ...args))
+        ),
+      }), {}),
     };
   }
 }
