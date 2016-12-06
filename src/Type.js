@@ -20,10 +20,10 @@ export default class Type {
     ensureUniqueFields(fields.attributes, fields.relationships);
 
     this.name = name;
-    this.meta = fields.meta || {};
     this._attributes = fields.attributes || {};
     this._relationships = fields.relationships || {};
 
+    // hydrate relationships
     this._relationships = Object.keys(this._relationships).reduce((prev, field) => {
       const relationship = this._relationships[field];
 
@@ -40,6 +40,13 @@ export default class Type {
         [field]: relationship(field),
       };
     }, {});
+
+    // hydrate all other top level keys
+    Object.keys(fields).forEach(key => {
+      if (key !== 'attributes' && key !== 'relationships') {
+        this[key] = fields[key];
+      }
+    });
   }
 
   hasAttribute(field) {

@@ -12,6 +12,7 @@ test('should compile relationships immediately', async t => {
     relationships: {
       blogs: hasMany('blog', 'author'),
     },
+    inflection: 'users',
   });
 
   const requiredKeys = ['inverse', 'relation', 'name', 'field'];
@@ -26,6 +27,7 @@ test('should compile relationships immediately', async t => {
   t.truthy(user.attribute('name'));
   t.truthy(user.hasAttribute('name'));
   t.truthy(user.hasRelationship('blogs'));
+  t.is(user.inflection, 'users');
 
   iterators.forEach(iterator => {
     t.is(typeof user.attributes[iterator], 'function');
