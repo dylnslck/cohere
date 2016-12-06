@@ -3,7 +3,7 @@
   "version": "1.0.6",
   "description": "Simple schemas",
   "main": "dist/index.js",
-  "repository": "directlyio/cohere",
+  "repository": "dylnslck/cohere",
   "author": "Dylan Slack <dylanslack@gmail.com> (http://www.dylanslack.com)",
   "license": "MIT",
   "scripts": {

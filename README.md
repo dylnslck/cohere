@@ -1,5 +1,5 @@
 # Cohere
-Declaratively define a schema with types and their relationships, then compile.
+Declaratively define a schema with types and their associations with other types, then compile.
 
 ```js
 import Schema, { hasMany, hasOne, belongsTo } from 'cohere';
