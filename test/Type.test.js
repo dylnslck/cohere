@@ -32,6 +32,11 @@ test('should compile relationships immediately', async t => {
   iterators.forEach(iterator => {
     t.is(typeof user.attributes[iterator], 'function');
     t.is(typeof user.relationships[iterator], 'function');
+
+    user.attributes[iterator](attribute => {
+      t.truthy(attribute.hasOwnProperty('field'));
+      t.truthy(attribute.hasOwnProperty('type'));
+    });
   });
 });
 

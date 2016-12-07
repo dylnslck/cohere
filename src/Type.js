@@ -109,7 +109,7 @@ export default class Type {
         ...accumulator,
         [iterator]: (fn) => (
           Object.keys(attributes)[iterator]((field, ...args) =>
-            fn(attributes[field], ...args))
+            fn({ type: attributes[field], field }, ...args))
         ),
       }), {}),
     };
