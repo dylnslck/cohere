@@ -7,10 +7,15 @@ const iterators = ['map', 'some', 'every', 'filter', 'find'];
 test('should compile relationships immediately', async t => {
   const user = new Type('user', {
     attributes: {
-      name: true,
+      name: {
+        type: String,
+        required: true,
+      },
     },
     relationships: {
-      blogs: hasMany('blog', 'author'),
+      blogs: hasMany('blog', 'author', {
+        required: true,
+      }),
     },
     inflection: 'users',
   });
@@ -22,6 +27,7 @@ test('should compile relationships immediately', async t => {
 
     t.is(typeof relationship, 'object');
     t.is(requiredKeys.sort().join(), actualKeys.sort().join());
+    t.truthy(relationship.hasOwnProperty('required'));
   });
 
   t.truthy(user.attribute('name'));
@@ -36,6 +42,7 @@ test('should compile relationships immediately', async t => {
     user.attributes[iterator](attribute => {
       t.truthy(attribute.hasOwnProperty('field'));
       t.truthy(attribute.hasOwnProperty('type'));
+      t.truthy(attribute.hasOwnProperty('required'));
     });
   });
 });
